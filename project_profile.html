@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রকল্প প্রোফাইল - Carbodit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#1b4332">
+   <style>
+        :root {
+            --primary-green: #2d5a27;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: var(--bg-light);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-green);
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            font-size: 20px;
+        }
+
+        /* মেনু লিস্ট স্টাইল */
+        .project-menu {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid #eee;
+            color: var(--primary-green);
+            font-weight: bold;
+        }
+
+        .menu-item:hover {
+            background: #eef5ee;
+            transform: translateX(5px);
+        }
+
+        /* কন্টেন্ট পেজ স্টাইল (লুকানো থাকবে) */
+        .content-page {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .content-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--primary-green);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--primary-green);
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .detail-text {
+            line-height: 1.8;
+            color: #444;
+            text-align: justify;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .info-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-table td:first-child {
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        .social-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            display: inline-block;
+            margin: 10px;
+            font-size: 30px;
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .footer-nav {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .main-back {
+            text-decoration: none;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="project-home">
+        <h2>প্রকল্প প্রোফাইল: বনায়ন ও ভূমি পুনরুদ্ধার প্রকল্প</h2>
+        <div class="project-menu">
+            <div class="menu-item" onclick="showPage('page1')">প্রকল্পের সংক্ষিপ্ত পরিচিতি <i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item" onclick="showPage('page2')">প্রকল্পের মূল তথ্য <i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item" onclick="showPage('page3')">প্রকল্পের উদ্দেশ্য <i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item" onclick="showPage('page4')">কার্বন প্রশমন ও ফলাফল <i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item" onclick="showPage('page5')">কোন জমিতে এই প্রকল্প প্রযোজ্য <i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item" onclick="showPage('page6')">কেন এই প্রকল্প গুরুত্বপূর্ণ? <i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item" onclick="showPage('page7')">আমাদের সাথে যুক্ত হতে <i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="footer-nav">
+            <a href="home.html" class="main-back">← প্রধান মেনুতে ফিরে যান</a>
+        </div>
+    </div>
+
+    <div id="page1" class="content-page">
+        <div class="content-header">
+            <button class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i></button>
+            <h3>সংক্ষিপ্ত পরিচিতি</h3>
+        </div>
+        <div class="detail-text">
+            VM0047 বনায়ন, পুনঃবনায়ন ও সবুজায়ন (ARR) প্রকল্প একটি স্বীকৃত কার্বন প্রশমন উদ্যোগ, যার লক্ষ্য হলো বনহীন বা ক্ষতিগ্রস্ত জমিতে গাছ লাগানো, বিদ্যমান বনভূমি উন্নত করা এবং বায়ুমণ্ডল থেকে কার্বন ডাই-অক্সাইড শোষণ বৃদ্ধি করা।
+        </div>
+    </div>
+
+    <div id="page2" class="content-page">
+        <div class="content-header">
+            <button class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i></button>
+            <h3>প্রকল্পের মূল তথ্য</h3>
+        </div>
+        <table class="info-table">
+            <tr><td>পদ্ধতির নাম:</td><td>VM0047 – বনায়ন, পুনঃবনায়ন ও সবুজায়ন</td></tr>
+            <tr><td>সংস্করণ:</td><td>১.১</td></tr>
+            <tr><td>অবস্থা:</td><td>সক্রিয় (১৪ মে ২০২৫ থেকে)</td></tr>
+            <tr><td>প্রকল্পের ধরন:</td><td>কার্বন অপসারণ (Carbon Removal)</td></tr>
+            <tr><td>খাত:</td><td>AFOLU</td></tr>
+        </table>
+    </div>
+
+    <div id="page3" class="content-page">
+        <div class="content-header">
+            <button class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i></button>
+            <h3>প্রকল্পের উদ্দেশ্য</h3>
+        </div>
+        <div class="detail-text">
+            <ul>
+                <li>বনহীন জমিতে নতুন করে গাছ লাগানো</li>
+                <li>ক্ষতিগ্রস্ত বা অব্যব্যহৃত জমিতে সবুজায়ন করা</li>
+                <li>বিদ্যমান বনভূমিতে কার্বন সংরক্ষণ বৃদ্ধি করা</li>
+                <li>জলবায়ু পরিবর্তনের ক্ষতিকর প্রভাব কমানো</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="page4" class="content-page">
+        <div class="content-header">
+            <button class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i></button>
+            <h3>কার্বন প্রশমন ও ফলাফল</h3>
+        </div>
+        <div class="detail-text">
+            <ul>
+                <li>গাছ ও উদ্ভিদের মাধ্যমে বায়ুমণ্ডল থেকে কার্বন ডাই-অক্সাইড শোষণ করা হয়</li>
+                <li>দীর্ঘমেয়াদে কার্বন সংরক্ষণ নিশ্চিত হয়</li>
+                <li>যাচাইকৃত কার্বন অপসারণ (Verified Carbon Removals) অর্জন করা সম্ভব হয়</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="page5" class="content-page">
+        <div class="content-header">
+            <button class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i></button>
+            <h3>কোন জমিতে এই প্রকল্প প্রযোজ্য</h3>
+        </div>
+        <div class="detail-text">
+            <ul>
+                <li>যেসব জমিতে আগে বন ছিল না</li>
+                <li>যেসব জমিতে বন ধ্বংস বা ক্ষতিগ্রস্ত হয়েছে</li>
+                <li>বিদ্যমান বনভূমি যেখানে উন্নয়নের সুযোগ রয়েছে</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="page6" class="content-page">
+        <div class="content-header">
+            <button class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i></button>
+            <h3>কেন এই প্রকল্প গুরুত্বপূর্ণ?</h3>
+        </div>
+        <div class="detail-text">
+            <ul>
+                <li>পরিবেশ সংরক্ষণে কার্যকর ভূমিকা</li>
+                <li>কৃষক ও ভূমি মালিকদের অতিরিক্ত আয়ের সুযোগ</li>
+                <li>মাটির গুণগত মান উন্নয়ন</li>
+                <li>আন্তর্জাতিকভাবে স্বীকৃত কার্বন প্রকল্পের অংশগ্রহণ</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="page7" class="content-page">
+        <div class="content-header">
+            <button class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i></button>
+            <h3>আমাদের সাথে যুক্ত হতে</h3>
+        </div>
+        <div class="detail-text" style="text-align: center;">
+            আমাদের কার্যক্রম ও আপডেট জানতে আমাদের সোশ্যাল মিডিয়ায় যুক্ত থাকুন—
+            
+            <div class="social-icons">
+                <a href="https://www.facebook.com/carbodit" target="_blank" class="fb-icon" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/carbodit-2025/" target="_blank" class="li-icon" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showPage(pageId) {
+        document.getElementById('project-home').style.display = 'none';
+        const pages = document.getElementsByClassName('content-page');
+        for (let page of pages) {
+            page.style.display = 'none';
+        }
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    function showHome() {
+        const pages = document.getElementsByClassName('content-page');
+        for (let page of pages) {
+            page.style.display = 'none';
+        }
+        document.getElementById('project-home').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

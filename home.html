@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>হোম - Carbodit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#1b4332">
+    <style>
+        :root {
+            --primary-green: #1b4332; 
+            --accent-green: #2d6a4f;
+            --soft-white: #f8fdf9;
+            --card-bg: #ffffff;
+            --text-dark: #1b1b1b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background-color: var(--soft-white);
+            color: var(--text-dark);
+        }
+
+        /* হেডার সেকশন */
+        .header {
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-green));
+            color: white;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 1px;
+        }
+
+        .header h1 i {
+            color: #74c69d; 
+            font-size: 35px;
+        }
+
+        .header p {
+            margin-top: 10px;
+            font-size: 15px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* মেনু গ্রিড */
+        .menu-container {
+            padding: 25px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 18px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--primary-green);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-card:active {
+            transform: scale(0.95);
+            background-color: #f1f8f4;
+        }
+
+        .menu-card i {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: var(--accent-green);
+        }
+
+        .menu-card span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* ৭ম অপশন - ফুল উইডথ */
+        .full-width {
+            grid-column: span 2;
+            background: #d8f3dc;
+            border: 1px solid #95d5b2;
+        }
+
+        /* সোশ্যাল মিডিয়া সেকশন */
+        .footer-social {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .footer-social p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-icons a {
+            text-decoration: none;
+            font-size: 28px;
+            transition: 0.3s;
+        }
+        .fb-icon { color: #1877F2; } /* ফেসবুক ব্র্যান্ড কালার */
+        .li-icon { color: #0A66C2; } /* লিঙ্কডইন ব্র্যান্ড কালার */
+        .social-icons a:hover { transform: scale(1.2); opacity: 0.8; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1><i class="fas fa-seedling"></i> Carbodit</h1>
+        <p>আপনার বনায়ন, আমাদের প্রযুক্তি, আগামী দিনের সুরক্ষা</p>
+    </div>
+
+    <div class="menu-container">
+        <div class="menu-grid">
+            
+            <a href="page2.html" class="menu-card">
+                <i class="fas fa-user-check"></i>
+                <span>নিবন্ধন করুন</span>
+            </a>
+
+            <a href="calculator.html" class="menu-card">
+                <i class="fas fa-calculator"></i>
+                <span>ক্যালকুলেটর</span>
+            </a>
+
+            <a href="farmer_profile.html" class="menu-card">
+                <i class="fas fa-user-circle"></i>
+                <span>আমার প্রোফাইল</span>
+            </a>
+
+            <a href="about_carbon.html" class="menu-card">
+                <i class="fas fa-globe-americas"></i>
+                <span>কার্বন ক্রেডিট কি?</span>
+            </a>
+
+            <a href="project_profile.html" class="menu-card">
+                <i class="fas fa-file-contract"></i>
+                <span>প্রকল্প প্রোফাইল</span>
+            </a>
+
+            <a href="help_center.html" class="menu-card">
+                <i class="fas fa-question-circle"></i>
+                <span>সহায়তা কেন্দ্র</span>
+            </a>
+
+            <a href="brief.html" class="menu-card full-width">
+                <i class="fas fa-stream"></i>
+                <span>এক নজরে Carbodit প্রক্রিয়া</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-social">
+            <p>Carbodit বিষয়ে আপডেট থাকতে ভিজিট করুন আমাদের পেজ:</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/carbodit" target="_blank" class="fb-icon" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/carbodit-2025/" target="_blank" class="li-icon" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+<script>
+  // আপনার প্রজেক্টের সঠিক কনফিগ
+  const firebaseConfig = {
+    apiKey: "AIzaSyDkaLVe0rDY7ZrKg1NFjCVmmcQ9YoDDio",
+    authDomain: "carbodit-1986a.firebaseapp.com",
+    projectId: "carbodit-1986a",
+    storageBucket: "carbodit-1986a.firebasestorage.app",
+    messagingSenderId: "288440338617",
+    appId: "1:288440338617:web:97794207671d0d2aedb368",
+    measurementId: "G-ZZCZMNE745"
+  };
+
+  // Firebase ইনিশিয়ালাইজ করা
+  if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+  }
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কৃষক প্রোফাইল - Carbodit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #1b4332; --secondary: #2d6a4f; --bg: #f8fdf9; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
+        
+        .profile-container { width: 100%; max-width: 450px; background: white; border-radius: 30px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        
+        .header { background: linear-gradient(to bottom, var(--primary), var(--secondary)); padding: 40px 20px; text-align: center; color: white; position: relative; }
+        .photo-section { position: relative; width: 120px; height: 120px; margin: 0 auto 15px; }
+        #profile-img-preview { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid white; background: #eee; }
+        .upload-btn { position: absolute; bottom: 5px; right: 5px; background: white; color: var(--primary); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
+        
+        .verified-text { font-size: 13px; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; display: inline-block; margin-top: 10px; }
+
+        .content { padding: 25px; }
+        .info-card { background: #f9fdfb; border: 1px solid #e0eee8; padding: 15px; border-radius: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .info-label { font-size: 12px; color: #666; display: block; margin-bottom: 5px; }
+        .info-value { font-size: 16px; font-weight: bold; color: var(--primary); }
+        .edit-icon { color: #27ae60; cursor: pointer; font-size: 18px; padding: 5px; }
+
+        .carbon-card { background: #eafaf1; border: 2px solid #27ae60; }
+        .carbon-value { font-size: 24px; color: #27ae60; font-weight: 900; }
+
+        /* হিস্ট্রি সেকশন স্টাইল */
+        .history-box { margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 20px; }
+        .history-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+        .history-date { color: #888; }
+        .history-val { font-weight: bold; color: var(--primary); }
+
+        .btn-action { width: 100%; padding: 15px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 16px; transition: 0.3s; text-decoration: none; display: block; text-align: center; box-sizing: border-box;}
+        .btn-home { background: var(--primary); color: white; }
+        .btn-calc { background: #27ae60; color: white; margin-top: 5px; }
+        
+        #phone-input { border: 1px solid var(--primary); padding: 5px; border-radius: 5px; font-size: 16px; width: 140px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <div class="header">
+        <div class="photo-section">
+            <img id="profile-img-preview" src="https://via.placeholder.com/120" alt="Profile">
+            <label for="img-upload" class="upload-btn">
+                <i class="fas fa-camera"></i>
+            </label>
+            <input type="file" id="img-upload" style="display:none;" accept="image/*">
+        </div>
+        <h2 id="display-name" style="margin:0;">লোড হচ্ছে...</h2>
+        <span class="verified-text"><i class="fas fa-check-circle"></i> এনআইডি ভেরিফাইড কৃষক</span>
+    </div>
+
+    <div class="content">
+        <div class="info-card carbon-card">
+            <div>
+                <span class="info-label" style="color: #27ae60; font-weight: bold;">মোট অর্জিত কার্বন ক্রেডিট</span>
+                <span class="carbon-value" id="val-carbon">০.০০</span>
+            </div>
+            <i class="fas fa-leaf" style="color:#27ae60; font-size: 28px;"></i>
+        </div>
+
+        <div class="info-card">
+            <div>
+                <span class="info-label">পুরো নাম (এনআইডি অনুযায়ী)</span>
+                <span class="info-value" id="val-name">লোড হচ্ছে...</span>
+            </div>
+            <i class="fas fa-user-check" style="color:var(--primary);"></i> 
+        </div>
+
+        <div class="info-card">
+            <div>
+                <span class="info-label">ব্যবহারযোগ্য ফোন নম্বর</span>
+                <span class="info-value" id="val-phone">লোড হচ্ছে...</span>
+                <input type="tel" id="phone-input">
+            </div>
+            <i class="fas fa-edit edit-icon" id="edit-phone-btn" onclick="toggleEditPhone()"></i>
+        </div>
+
+        <div class="info-card">
+            <div>
+                <span class="info-label">এনআইডি নম্বর</span>
+                <span class="info-value" id="val-nid">লোড হচ্ছে...</span>
+            </div>
+            <i class="fas fa-id-card" style="color:#27ae60;"></i>
+        </div>
+
+        <div class="history-box" id="history-container">
+            <h3 style="font-size: 16px; color: var(--primary); margin-bottom: 10px;"><i class="fas fa-history"></i> পূর্বের কার্বন রিপোর্ট</h3>
+            <div id="history-list">
+                <p style="text-align:center; font-size:12px; color:#999;">লোড হচ্ছে...</p>
+            </div>
+        </div>
+
+        <button class="btn-action btn-home" onclick="location.href='home.html'">হোম পেজে ফিরে যান</button>
+        <button class="btn-action btn-calc" onclick="location.href='calculator.html'">আবার ক্যালকুলেট করুন</button>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDkaLVe0rDY7ZrKg1NFjCVmmcQ9YoDDio",
+        authDomain: "carbodit-1986a.firebaseapp.com",
+        projectId: "carbodit-1986a",
+        storageBucket: "carbodit-1986a.firebasestorage.app",
+        messagingSenderId: "288440338617",
+        appId: "1:288440338617:web:97794207671d0d2aedb368"
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    function toBengali(num) {
+        if (num === null || num === undefined) return '০.০০';
+        const bng = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+        return num.toString().replace(/\d/g, d => bng[d]);
+    }
+
+    async function loadFarmerProfile() {
+        const phone = localStorage.getItem('farmerPhone');
+        if (!phone) { window.location.href = 'login.html'; return; }
+
+        const savedImg = localStorage.getItem('profileImg');
+        if (savedImg) document.getElementById('profile-img-preview').src = savedImg;
+
+        try {
+            const doc = await db.collection("farmers").doc(phone).get();
+            if (doc.exists) {
+                const data = doc.data();
+                document.getElementById('display-name').innerText = data.name || "কৃষক প্রোফাইল";
+                document.getElementById('val-name').innerText = data.name || "তথ্য নেই";
+                document.getElementById('val-phone').innerText = toBengali(data.phone);
+                document.getElementById('val-nid').innerText = toBengali(data.nid || "ভেরিফাইড");
+
+                let cloudCredit = parseFloat(data.totalCarbonStock) || 0;
+                let sessionCredit = parseFloat(localStorage.getItem('lastCalculatedCredit')) || 0;
+
+                if (sessionCredit > 0) {
+                    let newTotal = cloudCredit + sessionCredit;
+                    await db.collection("farmers").doc(phone).update({ totalCarbonStock: newTotal });
+                    document.getElementById('val-carbon').innerText = toBengali(newTotal.toFixed(2));
+                    localStorage.setItem('lastCalculatedCredit', 0);
+                } else {
+                    document.getElementById('val-carbon').innerText = toBengali(cloudCredit.toFixed(2));
+                }
+                loadHistory(phone);
+            }
+        } catch (error) { console.error("Error:", error); }
+    }
+
+    // হিস্ট্রি লোড ফাংশন
+    async function loadHistory(phone) {
+        const historyList = document.getElementById('history-list');
+        try {
+            const snapshot = await db.collection("farmer_submissions")
+                .where("phone", "==", phone)
+                .orderBy("submittedAt", "desc")
+                .limit(5)
+                .get();
+
+            if (!snapshot.empty) {
+                historyList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    const date = d.submittedAt ? d.submittedAt.toDate().toLocaleDateString('bn-BD') : '--';
+                    historyList.innerHTML += `
+                        <div class="history-item">
+                            <span class="history-date">${date}</span>
+                            <span class="history-val">${toBengali(d.total_carbon_stock)} কেজি</span>
+                        </div>
+                    `;
+                });
+            } else {
+                historyList.innerHTML = '<p style="text-align:center; font-size:12px; color:#999;">কোনো হিস্ট্রি পাওয়া যায়নি।</p>';
+            }
+        } catch (e) { 
+            console.log(e);
+            historyList.innerHTML = '<p style="text-align:center; font-size:12px; color:red;">তথ্য লোড করা সম্ভব হয়নি।</p>';
+        }
+    }
+
+    // ফোন নম্বর আপডেট লজিক
+    let isEditing = false;
+    async function toggleEditPhone() {
+        const valSpan = document.getElementById('val-phone');
+        const inputField = document.getElementById('phone-input');
+        const btn = document.getElementById('edit-phone-btn');
+        const oldPhone = localStorage.getItem('farmerPhone');
+
+        if (!isEditing) {
+            inputField.value = oldPhone;
+            valSpan.style.display = 'none';
+            inputField.style.display = 'inline-block';
+            btn.className = 'fas fa-save edit-icon';
+            isEditing = true;
+        } else {
+            const newPhone = inputField.value;
+            if (newPhone.length === 11) {
+                try {
+                    const oldDoc = await db.collection("farmers").doc(oldPhone).get();
+                    if (oldDoc.exists) {
+                        const userData = oldDoc.data();
+                        userData.phone = newPhone;
+                        await db.collection("farmers").doc(newPhone).set(userData);
+                        await db.collection("farmers").doc(oldPhone).delete();
+                        localStorage.setItem('farmerPhone', newPhone);
+                        valSpan.innerText = toBengali(newPhone);
+                        alert("নম্বর সফলভাবে সেভ হয়েছে!");
+                    }
+                } catch (e) { alert("সেভ করতে সমস্যা হয়েছে!"); }
+                valSpan.style.display = 'inline-block';
+                inputField.style.display = 'none';
+                btn.className = 'fas fa-edit edit-icon';
+                isEditing = false;
+            } else {
+                alert("১১ ডিজিটের নম্বর দিন!");
+            }
+        }
+    }
+
+    // প্রোফাইল ফটো আপলোড
+    document.getElementById('img-upload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imgData = event.target.result;
+                document.getElementById('profile-img-preview').src = imgData;
+                localStorage.setItem('profileImg', imgData);
+                const phone = localStorage.getItem('farmerPhone');
+                db.collection("farmers").doc(phone).update({ profilePhoto: imgData });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    window.onload = loadFarmerProfile;
+</script>
+</body>
+</html>

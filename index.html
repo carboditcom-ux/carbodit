@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="keywords" content="Carbodit, কার্বোডিট, কার্বন ক্রেডিট ক্যালকুলেটর, কৃষক সেবা, বনায়ন, Carbon Credit Bangladesh, Tree Carbon Calculator">
+    
+    <meta property="og:title" content="Carbodit">
+
+<meta property="og:image" content="apple-touch-icon.png"> <meta property="og:url" content="https://carbodit.netlify.app"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbodit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#1b4332">
+    <style>
+        :root {
+            --primary-green: #1b4332; /* ডার্ক গ্রিন - নির্ভরযোগ্যতার প্রতীক */
+            --accent-green: #2d6a4f;
+            --soft-white: #f8fdf9;
+            --white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--soft-white);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px 20px;
+            background: var(--white);
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        /* হেডলাইন সেকশন */
+        .brand-section {
+            margin-bottom: 40px;
+        }
+
+        .brand-name {
+            font-size: 3.5rem;
+            color: var(--primary-green);
+            font-weight: 800;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .brand-name i {
+            color: #52b788; /* আইকন কালার */
+            font-size: 3.8rem;
+        }
+
+        .welcome-text {
+            font-size: 1.8rem;
+            color: var(--accent-green);
+            margin-top: 5px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* অ্যানিমেটেড ট্রি এরিয়া (সিম্পল রাখা হয়েছে আস্থার জন্য) */
+        .illustration {
+            margin: 50px 0;
+            color: var(--primary-green);
+            opacity: 0.1;
+            position: absolute;
+            z-index: -1;
+        }
+
+        /* স্লোগান ও বাটন সেকশন */
+        .footer-section {
+            margin-top: 60px;
+        }
+
+        .quote {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .enter-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-green));
+            color: white;
+            font-size: 1.5rem;
+            padding: 18px 60px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(27, 67, 50, 0.2);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(27, 67, 50, 0.3);
+            background: linear-gradient(135deg, var(--accent-green), var(--primary-green));
+        }
+
+        /* রেসপন্সিভ */
+        @media (max-width: 480px) {
+            .brand-name { font-size: 2.8rem; }
+            .brand-name i { font-size: 3rem; }
+            .welcome-text { font-size: 1.4rem; }
+            .enter-btn { font-size: 1.3rem; padding: 15px 45px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="brand-section">
+            <h1 class="brand-name">
+                <i class="fas fa-seedling"></i> Carbodit
+            </h1>
+            <div class="welcome-text">আপনাকে স্বাগতম</div>
+        </div>
+
+        <div class="footer-section">
+            <p class="quote">"সবুজ হোক পৃথিবী, সমৃদ্ধ হোক কৃষক"</p>
+            <a href="login.html" class="enter-btn">প্রবেশ করুন</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সহায়তা কেন্দ্র - Carbodit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#1b4332">
+    <style>
+        :root { --primary: #1b4332; --accent: #2d6a4f; --bg: #f8fdf9; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        /* সার্চ বক্স ও ভয়েস আইকন */
+        .search-wrapper { position: relative; margin: 20px 0; }
+        #faqSearch { width: 100%; padding: 15px 85px 15px 20px; border: 2px solid #eee; border-radius: 50px; font-size: 16px; outline: none; transition: 0.3s; box-sizing: border-box; }
+        #faqSearch:focus { border-color: var(--accent); }
+        
+        .action-icons { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); display: flex; gap: 15px; font-size: 20px; }
+        .voice-btn { color: var(--accent); cursor: pointer; transition: 0.2s; }
+        .voice-btn.listening { color: red; animation: pulse 1s infinite; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* FAQ কার্ডস */
+        .faq-card { background: #fff; border: 1px solid #f0f0f0; border-radius: 15px; padding: 18px; margin-bottom: 12px; display: none; border-left: 5px solid var(--primary); animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* এরর মেসেজ */
+        #noResults { display: none; text-align: center; padding: 20px; background: #fff5f5; border-radius: 15px; color: #c53030; }
+        
+        .call-support { display: block; text-align: center; background: var(--primary); color: white; padding: 15px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="text-align:center; color: var(--primary);"><i class="fas fa-headset"></i> সাহায্য কেন্দ্র</h2>
+    
+    <div class="search-wrapper">
+        <input type="text" id="faqSearch" placeholder="এখানে লিখুন বা কথা বলুন..." onkeyup="searchFAQ()">
+        <div class="action-icons">
+            <i class="fas fa-microphone voice-btn" id="voiceBtn" onclick="startVoice()"></i>
+            <i class="fas fa-search" style="color:#aaa"></i>
+        </div>
+    </div>
+
+    <div id="faqContainer">
+        <div class="faq-card" data-tags="টাকা অর্থ ইনকাম আয় লাভ কড়ি পেমেন্ট বেতন সুবিধা বেনিফিট">
+            <strong>প্রশ্ন: আমি এখান থেকে টাকা পাব কীভাবে?</strong>
+            <p>উত্তর: আপনার রোপণকৃত গাছের কার্বন ক্রেডিট বিক্রি করে যে অর্থ উপার্জিত হবে, তা সরাসরি আপনার প্রোফাইলে যুক্ত হবে এবং আপনি তা ক্যাশ-আউট করতে পারবেন।</p>
+        </div>
+
+        <div class="faq-card" data-tags="গুরুত্ব দরকার প্রয়োজন কেন উপকার পরিবেশ জলবায়ু গ্লোবাল ওয়ার্মিং গাছ রক্ষা">
+            <strong>প্রশ্ন: কার্বোডিট এর গুরুত্ব কী?</strong>
+            <p>উত্তর: এটি একদিকে পরিবেশের কার্বন কমিয়ে জলবায়ু পরিবর্তন রোধ করে, অন্যদিকে কৃষকদের জন্য অতিরিক্ত আয়ের সুযোগ তৈরি করে।</p>
+        </div>
+        <div class="faq-card" data-tags="কেন তৈরি উদ্দেশ্য লক্ষ্য কারণ অ্যাপ অ্যাপটি">
+    <strong>প্রশ্ন: এই অ্যাপটি কেন তৈরি করা হয়েছে?</strong>
+    <p>উত্তর: কার্বোডিট অ্যাপটি তৈরি করা হয়েছে বনায়ন বৃদ্ধি এবং কার্বন ক্রেডিট বিক্রির মাধ্যমে কৃষকদের আর্থিকভাবে লাভবান করার উদ্দেশ্যে।</p>
+</div>
+<div class="faq-card" data-tags="কেন তৈরি অ্যাপ অ্যাপটি উদ্দেশ্য লক্ষ্য কারণ">
+    <strong>প্রশ্ন: Carbodit অ্যাপটির মূল উদ্দেশ্য কী?</strong>
+    <p>উত্তর: আমাদের লক্ষ্য হলো পরিবেশ রক্ষা করা এবং সাধারণ মানুষকে বনায়নের মাধ্যমে ডিজিটাল আয়ের সুযোগ করে দেওয়া।</p>
+</div>
+
+<div class="faq-card" data-tags="কয়টি গাছ কতটি কয়টা সর্বনিম্ন">
+    <strong>প্রশ্ন: আমি কতটি গাছ দিয়ে শুরু করতে পারি?</strong>
+    <p>উত্তর: আপনি মাত্র একটি গাছ দিয়েও শুরু করতে পারেন। গাছের সংখ্যা যত বেশি হবে, আপনার আয়ের পরিমাণ তত বাড়বে।</p>
+</div>
+<div class="faq-card" data-tags="ভূমিহীন জায়গা নেই জমি নেই অন্যের জমি লিজ বর্গা কৃষক কৃষি">
+    <strong>প্রশ্ন: একজন ভূমিহীন কৃষক কীভাবে উপকৃত হতে পারেন?</strong>
+    <p>উত্তর: যাদের নিজস্ব জমি নেই, তারা বর্গা নেওয়া জমি বা রাস্তার ধারের লিজ নেওয়া জায়গায় গাছ লাগিয়ে কার্বোডিট-এ নিবন্ধন করতে পারেন। গাছের মালিকানা বা রক্ষণাবেক্ষণের চুক্তির ভিত্তিতে তারা কার্বন ক্রেডিটের টাকা পাবেন।</p>
+</div>
+
+<div class="faq-card" data-tags="কেন তৈরি অ্যাপ অ্যাপটি উদ্দেশ্য লক্ষ্য কারণ কাজ কি">
+    <strong>প্রশ্ন: Carbodit অ্যাপটি কেন তৈরি করা হয়েছে?</strong>
+    <p>উত্তর: এটি মূলত পরিবেশ রক্ষা এবং বনায়নের মাধ্যমে সাধারণ মানুষের জন্য একটি দীর্ঘমেয়াদী আয়ের উৎস তৈরি করার জন্য তৈরি করা হয়েছে।</p>
+</div>
+
+<div class="faq-card" data-tags="কবে টাকা কতদিন সময় কখন পাব দেরি কতকাল">
+    <strong>প্রশ্ন: গাছ লাগানোর কতদিন পর টাকা পাওয়া যাবে?</strong>
+    <p>উত্তর: গাছ রোপণের পর তা কার্বন শোষণ শুরু করলেই ক্রেডিট জমা হওয়া শুরু হয়। সাধারণত নির্দিষ্ট পরিমাণ ক্রেডিট (যেমন: ১০ ডলার সমপরিমাণ) জমা হলে আপনি তা উত্তোলন করতে পারবেন।</p>
+</div>
+
+<div class="faq-card" data-tags="কোন গাছ ফল বনজ আম মেহগনি রেইনট্রি ভালো আয়">
+    <strong>প্রশ্ন: কোন ধরনের গাছ লাগালে সবচেয়ে বেশি আয় হবে?</strong>
+    <p>উত্তর: যেসব গাছ দ্রুত বড় হয় এবং যাদের কাণ্ড মোটা (যেমন: মেহগনি, রেইনট্রি, কড়ই), তারা বেশি কার্বন শোষণ করে। তবে আম বা কাঁঠালের মতো ফলজ গাছ থেকেও ক্রেডিট পাওয়া সম্ভব।</p>
+</div>
+
+<div class="faq-card" data-tags="প্রতারণা ভুয়া গ্যারান্টি নিরাপত্তা হ্যাক বিশ্বাস জালিয়াতি">
+    <strong>প্রশ্ন: এই অ্যাপে আমার তথ্য বা টাকা কি নিরাপদ?</strong>
+    <p>উত্তর: হ্যাঁ, আমরা প্রতিটি ইউজারের ডাটা এনক্রিপ্টেড রাখি এবং স্যাটেলাইট ইমেজের মাধ্যমে ভেরিফিকেশন করি, যা কোনো জালিয়াতি বা প্রতারণা রোধে সাহায্য করে।</p>
+</div>
+
+<div class="faq-card" data-tags="কার্বন ক্রেডিট কি মানে বুঝিনি সহজ করে">
+    <strong>প্রশ্ন: কার্বন ক্রেডিট জিনিসটা আসলে কী?</strong>
+    <p>উত্তর: একটি গাছ বাতাস থেকে যে পরিমাণ ক্ষতিকারক কার্বন শুষে নেয়, তার একটি ডিজিটাল সার্টিফিকেট বা মানদণ্ডই হলো কার্বন ক্রেডিট। এই সার্টিফিকেট বিশ্ববাজারে উন্নত দেশগুলোর কাছে বিক্রি করা হয়।</p>
+</div>
+<div class="faq-card" data-tags="গাছ মরে গেলে শুকিয়ে গেলে কেটে ফেললে চুরি হলে ক্ষতি গাছ নেই">
+    <strong>প্রশ্ন: আমার নিবন্ধিত গাছটি মরে গেলে বা কেউ কেটে ফেললে কী হবে?</strong>
+    <p>উত্তর: গাছ মরে গেলে বা কেটে ফেললে দ্রুত অ্যাপের মাধ্যমে আমাদের জানান। ওই গাছের ক্রেডিট গণনা বন্ধ হয়ে যাবে। তবে আপনি নতুন গাছ রোপণ করে পুনরায় ক্রেডিট অর্জন শুরু করতে পারবেন। জালিয়াতি ধরা পড়লে একাউন্ট বাতিল হতে পারে।</p>
+</div>
+
+<div class="faq-card" data-tags="পাসওয়ার্ড ভুলে গেছি লগইন হচ্ছে না পিন কোড গোপন নম্বর একাউন্ট ঢুকতে পারছি না">
+    <strong>প্রশ্ন: আমি আমার পাসওয়ার্ড ভুলে গেলে কী করব?</strong>
+    <p>উত্তর: লগইন পেজে গিয়ে 'Forgot Password' এ ক্লিক করুন। আপনার নিবন্ধিত ফোন নম্বরে একটি ওটিপি (OTP) যাবে, যার মাধ্যমে আপনি নতুন পাসওয়ার্ড সেট করতে পারবেন।</p>
+</div>
+
+<div class="faq-card" data-tags="টাকা তুলব কিভাবে ক্যাশ আউট বিকাশ নগদ ব্যাংক পেমেন্ট হাতে টাকা">
+    <strong>প্রশ্ন: আমি জমানো টাকা হাতে পাব কীভাবে?</strong>
+    <p>উত্তর: আপনার ওয়ালেটে নির্দিষ্ট পরিমাণ টাকা জমা হলে আপনি বিকাশ, নগদ বা সরাসরি ব্যাংক একাউন্টের মাধ্যমে তা উত্তোলন (Withdraw) করতে পারবেন।</p>
+</div>
+
+<div class="faq-card" data-tags="পুরানো গাছ আগের গাছ বয়স বড় গাছ কত বছর পুরোনো হবে">
+    <strong>প্রশ্ন: আমার আগে লাগানো বড় গাছগুলো কি এই অ্যাপে যুক্ত করা যাবে?</strong>
+    <p>উত্তর: হ্যাঁ, আপনার জমিতে থাকা যেকোনো জীবন্ত গাছ আপনি যুক্ত করতে পারেন। গাছের বয়স বা আকার যত বেশি হবে, তার কার্বন শোষণের ক্ষমতা তত বেশি হবে এবং আপনি বেশি ক্রেডিট পাবেন।</p>
+</div>
+
+<div class="faq-card" data-tags="যৌথ জমি ভাগাভাগি অংশীদার ভাই বোন লিজ পারিবারিক জমি">
+    <strong>প্রশ্ন: যৌথ মালিকানার জমিতে গাছ লাগালে টাকা কে পাবে?</strong>
+    <p>উত্তর: যার নামে অ্যাপে একাউন্ট খোলা হবে এবং গাছ নিবন্ধিত হবে, টাকা তার একাউন্টেই যাবে। যৌথ জমির ক্ষেত্রে আপনারা নিজেদের মধ্যে সমঝোতা করে একজনের নামে নিবন্ধন করতে পারেন।</p>
+</div>
+
+<div class="faq-card" data-tags="টাকা লাগবে ফি খরচ ফ্রি ডাউনলোড ফ্রি ব্যবহার">
+    <strong>প্রশ্ন: এই অ্যাপটি ব্যবহার করতে কি কোনো টাকা দিতে হয়?</strong>
+    <p>উত্তর: না, Carbodit অ্যাপটি ব্যবহার করা এবং নিবন্ধন করা সম্পূর্ণ ফ্রি। আমরা আপনার থেকে কোনো টাকা নেই না, বরং আপনি পরিবেশ রক্ষা করে টাকা আয় করেন।</p>
+</div>
+
+<div class="faq-card" data-tags="ছবি তুলে স্ক্যান ক্যামেরা অটোমেটিক মাপ ভিডিও">
+    <strong>প্রশ্ন: আমি কি শুধু ছবি তুলেই গাছের মাপ নিতে পারি?</strong>
+    <p>উত্তর: বর্তমানে আপনাকে ফিতা দিয়ে মেপে ইনপুট দিতে হবে। তবে আমরা খুব শীঘ্রই 'AI Camera Scanning' ফিচার যুক্ত করছি, যা দিয়ে শুধু ছবি তুলেই আপনি গাছের আকার জানতে পারবেন।</p>
+</div>
+
+<div class="faq-card" data-tags="কতটা গাছ কয়টি গাছ এক সাথে অনেক গাছ">
+    <strong>প্রশ্ন: আমি সর্বোচ্চ কয়টি গাছ নিবন্ধিত করতে পারব?</strong>
+    <p>উত্তর: গাছের সংখ্যার কোনো নির্দিষ্ট সীমা নেই। আপনার যতগুলো গাছ আছে আপনি সবগুলোই যুক্ত করতে পারেন।</p>
+</div>
+
+        <div class="faq-card" data-tags="মাপা মাপ পরিমাপ ইঞ্চি ফিতা নিয়ম লম্বা মোটা গোল উচ্চতা">
+            <strong>প্রশ্ন: গাছ মাপার সঠিক নিয়ম কী?</strong>
+            <p>উত্তর: মাটির ৪ ফুট উপরে গাছের গোল অংশটি ফিতা দিয়ে ইঞ্চিতে মেপে ক্যালকুলেটরে দিন।</p>
+        </div>
+    </div>
+
+    <div id="noResults">
+        <p>দুঃখিত, কোনো তথ্য পাওয়া যায়নি। আমরা বিষয়টি আমাদের ডাটাবেজে যুক্ত করার জন্য নোট করে নিয়েছি।</p>
+    </div>
+
+    <a href="tel:01521757626" class="call-support"><i class="fas fa-phone-alt"></i> সরাসরি কথা বলুন</a>
+    <p style="text-align:center;"><a href="home.html" style="color:#666; text-decoration:none; font-size:14px;">← ফিরে যান</a></p>
+</div>
+
+<script>
+    // ১. স্মার্ট সার্চ ফাংশন
+    function searchFAQ() {
+        let input = document.getElementById('faqSearch').value.toLowerCase().trim();
+        let cards = document.getElementsByClassName('faq-card');
+        let found = false;
+
+        if (input === "") {
+            for (let card of cards) card.style.display = "none";
+            document.getElementById('noResults').style.display = "none";
+            return;
+        }
+
+        for (let card of cards) {
+            let tags = card.getAttribute('data-tags');
+            if (tags.includes(input) || card.innerText.toLowerCase().includes(input)) {
+                card.style.display = "block";
+                found = true;
+            } else {
+                card.style.display = "none";
+            }
+        }
+
+        // ৩. Missing Question Log (Admin Notification Simulation)
+        if (!found && input.length > 3) {
+            document.getElementById('noResults').style.display = "block";
+            console.warn("ADMIN LOG: User searched for missing topic -> " + input);
+            // এখানে ভবিষ্যতে Firebase/Email API দিয়ে নিজের কাছে মেসেজ পাঠানো যাবে।
+        } else {
+            document.getElementById('noResults').style.display = "none";
+        }
+    }
+
+    // ২. ভয়েস সার্চ ফাংশন (Web Speech API)
+    function startVoice() {
+        const voiceBtn = document.getElementById('voiceBtn');
+        const searchInput = document.getElementById('faqSearch');
+
+        if (!('webkitSpeechRecognition' in window)) {
+            alert("আপনার ব্রাউজারে ভয়েস সাপোর্ট নেই। দয়া করে গুগল ক্রোম ব্যবহার করুন।");
+            return;
+        }
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'bn-BD'; // বাংলা ভাষা সেট করা হয়েছে
+
+        recognition.onstart = () => {
+            voiceBtn.classList.add('listening');
+        };
+
+        recognition.onresult = (event) => {
+            const result = event.results[0][0].transcript;
+            searchInput.value = result;
+            searchFAQ(); // স্বয়ংক্রিয়ভাবে সার্চ শুরু হবে
+        };
+
+        recognition.onend = () => {
+            voiceBtn.classList.remove('listening');
+        };
+
+        recognition.start();
+    }
+</script>
+
+</body>
+</html>

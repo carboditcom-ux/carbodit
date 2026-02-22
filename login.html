@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লগইন - Carbodit</title>
+    <link rel="icon" type="image/png" href="favicon-32x32.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #1b4332; --secondary: #2d6a4f; --bg: #f8fdf9; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        .login-card { 
+            background: white; padding: 40px 30px; border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05); width: 90%; max-width: 400px; text-align: center; 
+        }
+
+        .logo-area { color: var(--primary); font-size: 50px; margin-bottom: 10px; }
+        h2 { color: var(--primary); margin: 0 0 10px; font-size: 24px; }
+        p { color: #666; font-size: 14px; margin-bottom: 30px; }
+
+        .input-group { position: relative; margin-bottom: 20px; }
+        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--primary); }
+        
+        input { 
+            width: 100%; padding: 15px 15px 15px 45px; border: 2px solid #eee; 
+            border-radius: 15px; box-sizing: border-box; font-size: 16px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); background: #f0f7f3; }
+
+        /* স্ট্যাটাস মেসেজ ডিজাইন */
+        .status-msg { font-size: 13px; margin-top: 15px; display: none; padding: 10px; border-radius: 10px; }
+        .loading { color: var(--primary); background: #eafaf1; }
+        .error { color: #c0392b; background: #fff5f5; }
+
+        .back-link { 
+            display: inline-block; margin-top: 25px; color: #666; 
+            text-decoration: none; font-size: 14px; transition: 0.3s; 
+        }
+        .back-link:hover { color: var(--primary); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="logo-area"><i class="fas fa-leaf"></i></div>
+    <h2>স্বাগতম</h2>
+    <p>আপনার ফোন নম্বর দিয়ে লগইন করুন</p>
+    
+    <div class="input-group">
+        <i class="fas fa-phone-alt"></i>
+        <input type="tel" id="phoneInput" placeholder="০১৭XXXXXXXX" maxlength="11" oninput="checkUser()">
+    </div>
+    
+    <div id="status" class="status-msg"></div>
+
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> ফিরে যান</a>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+<script>
+    // Firebase Config আপনারটাই থাকবে
+    const firebaseConfig = {
+        apiKey: "AIzaSyDkaLVe0rDY7ZrKg1NFjCVmmcQ9YoDDio",
+        authDomain: "carbodit-1986a.firebaseapp.com",
+        projectId: "carbodit-1986a",
+        storageBucket: "carbodit-1986a.firebasestorage.app",
+        messagingSenderId: "288440338617",
+        appId: "1:288440338617:web:97794207671d0d2aedb368"
+    };
+
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    function checkUser() {
+        const phone = document.getElementById('phoneInput').value;
+        const status = document.getElementById('status');
+        
+        if (phone.length === 11) {
+            status.style.display = 'block';
+            status.className = "status-msg loading";
+            status.innerHTML = '<i class="fas fa-spinner fa-spin"></i> যাচাই করা হচ্ছে...';
+
+            // ১. ডাটাবেজে নম্বরটি খুঁজি
+            db.collection("farmers").where("phone", "==", phone).get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    // নম্বরটি আগে থেকেই আছে (Old User)
+                    status.innerHTML = '<i class="fas fa-check-circle"></i> স্বাগতম! প্রবেশ করানো হচ্ছে...';
+                    localStorage.setItem('farmerPhone', phone);
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1000);
+                } else {
+                    // নম্বরটি নেই (1st Time User), তাই নতুন করে সেভ করি
+                    status.innerHTML = '<i class="fas fa-user-plus"></i> আপনার নতুন প্রোফাইল তৈরি করা হচ্ছে...';
+                    
+                    db.collection("farmers").add({
+                        phone: phone,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        totalCarbonStock: 0
+                    })
+                    .then(() => {
+                        localStorage.setItem('farmerPhone', phone);
+                        status.innerHTML = '<i class="fas fa-check-circle"></i> সফল হয়েছে! হোম পেজে নিয়ে যাওয়া হচ্ছে...';
+                        setTimeout(() => { window.location.href = 'home.html'; }, 1200);
+                    })
+                    .catch((e) => {
+                        status.className = "status-msg error";
+                        status.innerText = "Error: " + e.message;
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Firebase Error: ", error);
+                status.className = "status-msg error";
+                status.innerHTML = "সার্ভারে সমস্যা হচ্ছে। রুলস (Rules) চেক করুন।";
+            });
+        } else {
+            status.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>

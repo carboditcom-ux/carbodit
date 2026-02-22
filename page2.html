@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নিবন্ধন - Carbodit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    
+    <style>
+        :root { --primary: #1b4332; --bg: #f8fdf9; --danger: #d63031; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { width: 95%; max-width: 420px; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        
+        .step { display: none; }
+        .step.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .icon-box { width: 60px; height: 60px; background: #e8f3ee; color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; margin: 0 auto 15px; }
+        
+        .scan-window { width: 100%; height: 230px; background: #000; border-radius: 15px; margin-bottom: 20px; position: relative; overflow: hidden; border: 3px solid #ddd; }
+        #videoFeed { width: 100%; height: 100%; object-fit: cover; }
+        .scan-line { position: absolute; width: 100%; height: 3px; background: #00ff00; top: 0; animation: scan 2s infinite linear; z-index: 5; }
+        @keyframes scan { to { top: 100%; } }
+
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; font-size: 15px; }
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 16px; margin-bottom: 10px; transition: 0.3s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: #eafaf1; color: var(--primary); border: 1px solid var(--primary); }
+        .btn-danger { background: #fff1f1; color: var(--danger); border: 1px solid var(--danger); }
+        .btn-back { background: #eee; color: #555; }
+        
+        #statusMsg { font-size: 14px; font-weight: bold; margin-bottom: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="step1" class="step active">
+        <div class="icon-box"><i class="fas fa-user-plus"></i></div>
+        <h2>নিবন্ধন শুরু করুন</h2>
+        <button class="btn btn-primary" onclick="goToStep('step2')">১: নিবন্ধন করুন</button>
+        <button class="btn btn-danger" onclick="cancelReg()">২: নিবন্ধন বাতিল করুন</button>
+        <button class="btn btn-back" onclick="location.href='home.html'"><i class="fas fa-arrow-left"></i> হোমে ফিরে যান</button>
+    </div>
+
+    <div id="step2" class="step">
+        <div class="icon-box"><i class="fas fa-id-card"></i></div>
+        <h2>তথ্য প্রদানের মাধ্যম</h2>
+        <p>আপনি কীভাবে আপনার তথ্য দিতে চান?</p>
+        <button class="btn btn-primary" onclick="startCamera()"><i class="fas fa-camera"></i> আইডি কার্ড স্ক্যান করুন</button>
+        <button class="btn btn-secondary" onclick="goToStep('step_manual')"><i class="fas fa-keyboard"></i> নিজে লিখে তথ্য দিন</button>
+        <button class="btn btn-back" onclick="goToStep('step1')">পিছনে যান</button>
+    </div>
+
+    <div id="step3" class="step">
+        <div class="scan-window">
+            <video id="videoFeed" autoplay playsinline muted></video>
+            <div class="scan-line"></div>
+        </div>
+        <span id="statusMsg">কার্ডটি স্থিরভাবে ধরুন...</span>
+        <button class="btn btn-primary" id="scanBtn" onclick="runAIScan()">স্ক্যান নিশ্চিত করুন</button>
+        <canvas id="hiddenCanvas" style="display:none;"></canvas>
+    </div>
+
+    <div id="step_manual" class="step">
+        <div class="icon-box"><i class="fas fa-edit"></i></div>
+        <h2>আপনার তথ্য দিন</h2>
+        <input type="text" id="manualName" placeholder="আপনার পুরো নাম">
+        <input type="number" id="manualNID" placeholder="এনআইডি কার্ড নম্বর">
+        <button class="btn btn-primary" onclick="validateManual()">পরবর্তী ধাপ</button>
+        <button class="btn btn-back" onclick="goToStep('step2')">পিছনে যান</button>
+    </div>
+
+    <div id="step4" class="step">
+        <div class="icon-box"><i class="fas fa-lock"></i></div>
+        <h2>পাসওয়ার্ড সেট করুন</h2>
+        <p>ভবিষ্যতে অ্যাকাউন্ট পরিবর্তন বা বাতিলের জন্য পাসওয়ার্ড প্রয়োজন হবে।</p>
+        <input type="password" id="pass1" placeholder="নতুন পাসওয়ার্ড (ন্যূনতম ৪ সংখ্যা)">
+        <input type="password" id="pass2" placeholder="পাসওয়ার্ডটি আবার লিখুন">
+        <button class="btn btn-primary" onclick="finishRegistration()"><i class="fas fa-save"></i> নিবন্ধন সম্পন্ন করুন</button>
+    </div>
+
+    <div id="step5" class="step">
+        <div class="icon-box"><i class="fas fa-check-double" style="color:green;"></i></div>
+        <h2>অভিনন্দন!</h2>
+        <p>আপনার প্রোফাইল সফলভাবে তৈরি হয়েছে।</p>
+        <button class="btn btn-primary" onclick="location.href='home.html'">হোম পেজে যান</button>
+        <button class="btn btn-back" onclick="location.href='farmer_profile.html'">প্রোফাইল দেখুন</button>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+<script>
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDkaLVe0rDY7ZrKg1NFjCVmmcQ9YoDDio",
+        authDomain: "carbodit-1986a.firebaseapp.com",
+        projectId: "carbodit-1986a",
+        storageBucket: "carbodit-1986a.firebasestorage.app",
+        messagingSenderId: "288440338617",
+        appId: "1:288440338617:web:97794207671d0d2aedb368"
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let registrationData = {
+        name: "",
+        nid: "",
+        phone: localStorage.getItem('farmerPhone') || "No Phone"
+    };
+
+    function goToStep(id) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    async function startCamera() {
+        goToStep('step3');
+        const video = document.getElementById('videoFeed');
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: "environment", width: { ideal: 1280 } } 
+            });
+            video.srcObject = stream;
+        } catch (err) {
+            alert("ক্যামেরা অন করা যাচ্ছে না। ম্যানুয়েল ইনপুট ব্যবহার করুন।");
+            goToStep('step_manual');
+        }
+    }
+
+    async function runAIScan() {
+        const video = document.getElementById('videoFeed');
+        const canvas = document.getElementById('hiddenCanvas');
+        const status = document.getElementById('statusMsg');
+        const btn = document.getElementById('scanBtn');
+        const ctx = canvas.getContext('2d');
+
+        btn.disabled = true;
+        status.innerText = "AI কার্ড চেক করছে...";
+        status.style.color = "orange";
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const image = canvas.toDataURL('image/png');
+
+        try {
+            const result = await Tesseract.recognize(image, 'ben+eng');
+            const txt = result.data.text.toLowerCase();
+            const keywords = ["government", "national", "identity", "card", "জাতীয়", "পরিচয়", "বাংলাদেশ"];
+            
+            if (keywords.some(word => txt.includes(word))) {
+                status.innerText = "কার্ড শনাক্ত হয়েছে!";
+                status.style.color = "green";
+                
+                registrationData.name = "Verified User"; // আপনি চাইলে Regex দিয়ে নাম বের করতে পারেন
+                registrationData.nid = "ScannedID"; 
+                
+                stopCamera();
+                setTimeout(() => goToStep('step4'), 1000);
+            } else {
+                status.innerText = "কার্ডটি বোঝা যাচ্ছে না। আবার চেষ্টা করুন।";
+                status.style.color = "red";
+                btn.disabled = false;
+            }
+        } catch (e) {
+            alert("AI প্রসেসিং-এ সমস্যা হয়েছে। ইন্টারনেট চেক করুন।");
+            btn.disabled = false;
+        }
+    }
+
+    function validateManual() {
+        const name = document.getElementById('manualName').value;
+        const nid = document.getElementById('manualNID').value;
+        if (name.length < 3 || nid.length < 10) {
+            alert("সঠিক নাম এবং অন্তত ১০ ডিজিটের এনআইডি নম্বর দিন।");
+            return;
+        }
+        registrationData.name = name;
+        registrationData.nid = nid;
+        goToStep('step4');
+    }
+
+    async function finishRegistration() {
+        const p1 = document.getElementById('pass1').value;
+        const p2 = document.getElementById('pass2').value;
+
+        if (p1 !== p2 || p1.length < 4) {
+            alert("পাসওয়ার্ড মেলেনি অথবা অত্যন্ত ছোট!");
+            return;
+        }
+
+        try {
+            // Firebase-এ ডাটা সেভ
+            await db.collection("farmers").doc(registrationData.phone).set({
+                name: registrationData.name,
+                nid: registrationData.nid,
+                phone: registrationData.phone,
+                password: p1,
+                isRegistered: true,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            localStorage.setItem('isRegistered', 'true');
+            localStorage.setItem('farmerName', registrationData.name);
+            localStorage.setItem('userPassword', p1);
+            
+            goToStep('step5');
+        } catch (err) {
+            alert("ডাটা সেভ করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+        }
+    }
+
+    function stopCamera() {
+        const video = document.getElementById('videoFeed');
+        if (video.srcObject) {
+            video.srcObject.getTracks().forEach(t => t.stop());
+        }
+    }
+
+    function cancelReg() {
+        if (!localStorage.getItem('isRegistered')) {
+            alert("নিবন্ধন করা কোনো প্রোফাইল পাওয়া যায়নি!");
+            return;
+        }
+        
+        const pass = prompt("নিবন্ধন বাতিল করতে আপনার পাসওয়ার্ড দিন:");
+        const storedPass = localStorage.getItem('userPassword');
+
+        if (pass === storedPass) {
+            if(confirm("আপনি কি নিশ্চিতভাবে আপনার সকল তথ্য ফায়ারবেস থেকে মুছে ফেলতে চান?")) {
+                const phone = localStorage.getItem('farmerPhone');
+                db.collection("farmers").doc(phone).delete().then(() => {
+                    localStorage.clear();
+                    alert("আপনার তথ্য মুছে ফেলা হয়েছে।");
+                    location.reload();
+                });
+            }
+        } else {
+            alert("ভুল পাসওয়ার্ড! নিবন্ধন বাতিল করা সম্ভব নয়।");
+        }
+    }
+</script>
+</body>
+</html>
